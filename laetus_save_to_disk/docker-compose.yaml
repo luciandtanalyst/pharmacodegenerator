@@ -1,0 +1,22 @@
+
+services:
+  app-laetus:
+    image: app-laetus:save_to_disk
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app-laetus
+    user: "${UID}:${GID}"
+    ports:
+      - "8503:8503"
+    volumes:
+      - ./codes:/app/codes
+    restart: unless-stopped
+    networks:
+      - app-laetus-net
+
+networks:
+  app-laetus-net:
+    driver: bridge
+
+  
