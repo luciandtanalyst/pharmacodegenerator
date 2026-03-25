@@ -35,7 +35,7 @@ Ensure you have **Docker** and **Docker Compose** installed on your system.
 
 1.  **Clone the repository**:
     ```bash
-    git clone [https://github.com/luciandtanalyst/pharmacodegenerator.git](https://github.com/luciandtanalyst/pharmacodegenerator.git)
+    git clone https://github.com/luciandtanalyst/pharmacodegenerator.git
     ```
 2.  **Navigate to the project folder and run**:
     ```bash
@@ -43,6 +43,10 @@ Ensure you have **Docker** and **Docker Compose** installed on your system.
     ```
 3.  **Access the application in your browser**: 
     [http://localhost:8503](http://localhost:8503)
+
+## 👀 Preview
+
+![App Screenshot](assets/screen-shot.png)
 
 ## 🗺️ Roadmap (Future Versions)
 
