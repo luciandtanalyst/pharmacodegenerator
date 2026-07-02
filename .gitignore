@@ -6,4 +6,3 @@ __pycache__/
 .mypy_cache/
 ./v1.0
 ./codes
-./uv
