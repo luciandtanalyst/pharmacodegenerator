@@ -4,5 +4,5 @@ __pycache__/
 *.pyc
 .pytest_cache/
 .mypy_cache/
-./v1.0
-./codes
+v1.0/
+codes/
