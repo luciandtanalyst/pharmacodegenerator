@@ -1,5 +1,5 @@
 def main():
-    print("Hello from pharmacodegenerator!")
+    print("Hello from code generator!")
 
 
 if __name__ == "__main__":
