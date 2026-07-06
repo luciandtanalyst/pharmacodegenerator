@@ -104,14 +104,14 @@ class LaetusCode:
 
         self.code_folder.mkdir(parents=True, exist_ok=True)
 
-        code_img.save(self.code_folder / f"{self.code_nr}.jpg", format="JPEG")
+        code_img.save(self.code_folder / f"{self.code_nr}.jpg", "JPEG")
 
     def to_png_file(self):
         code_img = self._create_image()
 
         self.code_folder.mkdir(parents=True, exist_ok=True)
 
-        code_img.save(self.code_folder / f"{self.code_folder}.png", format="PNG")
+        code_img.save(self.code_folder / f"{self.code_nr}.png", "PNG")
 
     def _build_svg(self):
         laetus_bars, canvas_width = self._get_bars()
@@ -129,7 +129,7 @@ class LaetusCode:
         text_y = self.bar_height + self.text_gap + self.text_size
         dwg.add(
             dwg.text(
-                str(self.number),
+                str(self.code_nr),
                 insert=(f"{text_x}mm", f"{text_y}mm"),
                 text_anchor = "middle",
                 font_family = "DejaVu Sans",
@@ -157,7 +157,6 @@ class LaetusCode:
         drawing = self._build_svg()
         self.code_folder.mkdir(parents=True, exist_ok=True)
 
-        drawing.filename = self.code_folder / f"{self.number}.svg"
+        drawing.filename = self.code_folder / f"{self.code_nr}.svg"
 
         drawing.save()
-
