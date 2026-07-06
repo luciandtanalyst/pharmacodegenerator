@@ -1,6 +1,7 @@
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 import io
+import svgwrite
 
 class LaetusCode:
 
@@ -111,3 +112,52 @@ class LaetusCode:
         self.code_folder.mkdir(parents=True, exist_ok=True)
 
         code_img.save(self.code_folder / f"{self.code_folder}.png", format="PNG")
+
+    def _build_svg(self):
+        laetus_bars, canvas_width = self._get_bars()
+        dwg = svgwrite.Drawing(size=(f"{self.canvas_height}mm", f"{canvas_width}mm"))
+
+        for x_bar, w_bar in laetus_bars:
+            dwg.add(
+                dwg.rect(
+                    insert = (f"{x_bar}mm", "0mm"),
+                    size = (f"{w_bar}mm", f"{self.bar_height}mm"),
+                    fill = "black"
+                )
+            )
+        text_x = canvas_width / 2
+        text_y = self.bar_height + self.text_gap + self.text_size
+        dwg.add(
+            dwg.text(
+                str(self.number),
+                insert=(f"{text_x}mm", f"{text_y}mm"),
+                text_anchor = "middle",
+                font_family = "DejaVu Sans",
+                font_size = f"{self.text_size}mm",
+                font_weight = "bold",
+                fill = "black"
+            )
+        )
+
+        return dwg
+    
+    def to_svg_string(self):
+        return self._build_svg().tostring()
+    
+    def to_svg(self):
+        drawing = self._build_svg()
+        svg_string = self.to_svg_string(drawing)
+
+        buffer = io.BytesIO(svg_string)
+        buffer.see(0)
+
+        return buffer
+    
+    def to_svg_file(self):
+        drawing = self._build_svg()
+        self.code_folder.mkdir(parents=True, exist_ok=True)
+
+        drawing.filename = self.code_folder / f"{self.number}.svg"
+
+        drawing.save()
+
