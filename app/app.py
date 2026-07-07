@@ -2,6 +2,7 @@ import streamlit as st
 from code_generator import LaetusCode
 from PIL import Image
 import zipfile
+import io
 
 def main():
     st.set_page_config(page_title="Laetus Code Generator")
@@ -54,11 +55,35 @@ def main():
     if first_code >= last_code:
         st.error("The last code must be greater than the first code")
     else:
-        pass
+        if st.button("Prepare codes for download"):
+            zip_buffer = io.BytesIO()
+            total_steps = last_code - first_code + 1
+            progress_barr = st.progress(0)
+            status_text = st.empty()
 
+            with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED, allowZip64=True) as zip_file:
+                for i, number in enumerate(range(first_code, last_code + 1)):
+                    bar_code = LaetusCode(number)
+                    generators = {
+                        "jpg": bar_code.to_jpg,
+                        "png": bar_code.to_png,
+                        "svg": bar_code.to_svg
+                    }
+                    byte_img = generators[file_format]().getvalue()
+                    zip_file.writestr(f"{number}.{file_format}", byte_img)
 
-    
-        
+                    progress_perc = (i+1)/total_steps
+                    progress_barr.progress(progress_perc)
+                    status_text.text(f"Processing code: {number} ({i+1}/{total_steps})")
+
+            st.success("Successfully created the ZIP archieve!")
+            st.download_button(
+                label = "Download ZIP",
+                data = zip_buffer.getvalue(),
+                file_name=f"Laetus_codes_{first_code}-{last_code}.zip",
+                mime="application/zip"
+            )
+
 
 if __name__ == "__main__":
     main()
