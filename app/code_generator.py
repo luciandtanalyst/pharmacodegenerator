@@ -115,7 +115,7 @@ class LaetusCode:
 
     def _build_svg(self):
         laetus_bars, canvas_width = self._get_bars()
-        dwg = svgwrite.Drawing(size=(f"{self.canvas_height}mm", f"{canvas_width}mm"))
+        dwg = svgwrite.Drawing(size=(f"{canvas_width}mm", f"{self.canvas_height}mm"))
 
         for x_bar, w_bar in laetus_bars:
             dwg.add(
@@ -145,11 +145,10 @@ class LaetusCode:
         return self._build_svg().tostring()
     
     def to_svg(self):
-        drawing = self._build_svg()
-        svg_string = self.to_svg_string(drawing)
+        svg_string = self._build_svg().tostring().encode(encoding="UTF-8")
 
         buffer = io.BytesIO(svg_string)
-        buffer.see(0)
+        buffer.seek(0)
 
         return buffer
     
