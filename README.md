@@ -115,6 +115,10 @@ Open your browser:
 http://localhost:8503
 ```
 
+## 👀 Preview
+
+![App Screenshot](assets/screen-shot.png)
+
 ---
 
 ## Usage
