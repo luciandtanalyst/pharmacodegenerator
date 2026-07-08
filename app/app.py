@@ -1,15 +1,19 @@
 import streamlit as st
 from code_generator import LaetusCode
+from pathlib import Path
 from PIL import Image
 import zipfile
 import io
 
 def main():
     st.set_page_config(page_title="Laetus Code Generator")
-    logo = Image.open("company_logo.jpg")
-    col_1, col_2, col_3 = st.columns([1, 3, 1])
-    with col_2:
-        st.image(logo, width=600)
+
+    logo_file = Path("logo/company_logo.jpg")
+    if logo_file.exists():
+        logo = Image.open(logo_file)
+        col_1, col_2, col_3 = st.columns([1, 3, 1])
+        with col_2:
+            st.image(logo, width=600)
     st.title("Laetus Code Generator")
 
     st.divider()
